@@ -1,7 +1,7 @@
-Array Detect w/ Value
-=====================
+Enumerable Detect w/ Value
+==========================
 
-[![Build Status](https://travis-ci.org/dblock/array-detect-value.png)](https://travis-ci.org/dblock/array-detect-value)
+[![Build Status](https://travis-ci.org/dblock/enumerable-detect-value.png)](https://travis-ci.org/dblock/enumerable-detect-value)
 
 ## Detect Value
 
