@@ -7,32 +7,38 @@ Enumerable Detect w/ Value
 
 Unlike `Enumerable#detect`, `#detect_value` returns the result of the block being evaluated.
 
+Consider an example where you have an expensive `Geocoder.search` operation and a list of addresses, two of which are fake. The
+function returns `nil` for a fake address. We would like to find the geo-location of the first real address.
+
 ```ruby
-ary = [ nil, 2, 3 ]
+addresses = [
+  '221B Baker Street, London, UK', # Sherlock Holmes
+  '1428 Elm Street, Springwood, Ohio', # Nightmare on Elm Street
+  '350 5th Ave, New York, NY' # Empire State Building
+]
 
-# returns 2, the first element for which the block evaluated to a non-nil result
-ary.detect do |value|
-  value ? value * 10 : nil
+first_real_address = addresses.detect do |address|
+  Geocoder.search(address)
 end
 
-# returns 20, the first non-nil result of the block being evaluated
-ary.detect_value do |value|
-  value ? value * 10 : nil
+first_real_address # 350 5th Ave, New York, NY
+```
+
+We do, however, want the geo-location of the first real address. We would have to call `Geocoder.search` on `first_real_address` twice.
+
+Using `detect_value` you can return the geo-location of the first real address.
+
+```ruby
+first_geo_location = addresses.detect_value do |address|
+  Geocoder.search(address)
 end
+
+first_geo_location # lat: 40.74830, lng: -73.98554
 ```
 
 ## Contributing
 
-You're encouraged to contribute to this gem.
-
-* Fork this project.
-* Create a feature branch with `git checkout -b my-branch`.
-* Make changes, write tests, ensure that `rake` runs clean.
-* Commit your changes with `git commit`.
-* Push your branch to Github with `git push origin my-branch`.
-* Make a pull request, note the number.
-* Updated [CHANGELOG](CHANGELOG.md) and commit via `git --amend`.
-* Push an update via `git push origin my-branch -f`.
+See [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Copyright and License
 
